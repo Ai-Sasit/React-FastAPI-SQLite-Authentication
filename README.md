@@ -1,4 +1,7 @@
 # React with Authentication
+## Default User
+  - Username: `admin`
+  - Password: `asd123`
 
 ## Start front-end
 ### don't forget to install node dependencies `npm i`
