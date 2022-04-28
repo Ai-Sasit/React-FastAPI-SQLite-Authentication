@@ -37,3 +37,8 @@ export const fetchAllUsers = async () => {
   let response = await api.get('/users');
   return response.data
 }
+
+export const updateSuperUser = async (id:number,payload: any) => {
+  let response = await api.patch(`/change_superuser/${id}`, payload)
+  return response.data
+}

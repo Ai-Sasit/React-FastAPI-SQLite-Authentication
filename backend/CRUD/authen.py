@@ -53,3 +53,11 @@ def login(req:OAuth2PasswordRequestForm = Depends()):
 @auth.get("/verify_token")
 def read_root(current_user:User = Depends(get_current_user)):
     return current_user
+
+@auth.patch("/change_superuser/{id}")
+def change_superuser(id: int, req: User):
+    if req.is_superuser:
+        conn.execute(Users.update().values(is_superuser = False).where(Users.c.id == id))
+    else:
+        conn.execute(Users.update().values(is_superuser = True).where(Users.c.id == id))
+    return conn.execute(Users.select()).fetchall()

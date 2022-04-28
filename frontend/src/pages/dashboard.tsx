@@ -8,7 +8,8 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Header from "./../components/dashHeader";
-import { fetchAllUsers } from "./../service/auth";
+import { fetchAllUsers, updateSuperUser } from "./../service/auth";
+import Switch from '@mui/material/Switch';
 
 interface Column {
   id: "id" | "username" | "email" | "is_superuser";
@@ -56,6 +57,17 @@ export default function StickyHeadTable() {
     setPage(0);
   };
 
+  const handleSuperuser = (id: string, value: boolean) => {
+    let payload = {
+      username: "",
+      email: "",
+      is_superuser: value,
+      password: "",
+  }
+    updateSuperUser(Number(id), payload);
+    window.location.reload()
+  }
+
   return (
     <div>
       <Header />
@@ -87,7 +99,7 @@ export default function StickyHeadTable() {
                       return (
                         <TableCell key={column.id} align={column.align}>
                           {column.format && typeof value === "boolean"
-                            ? column.format(value)
+                            ? value? <Switch onChange={e=>{handleSuperuser(row["id"],value)}} defaultChecked />:<Switch onChange={e=>{handleSuperuser(row["id"],value)}}/>
                             : value}
                         </TableCell>
                       );
